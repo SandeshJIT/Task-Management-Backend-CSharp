@@ -1,16 +1,14 @@
-﻿using FluentValidation.AspNetCore;
-using FluentValidation;
-using System.Reflection;
-using Microsoft.Extensions.Hosting;
-using Todo.API.Service;
-using Todo.API.EFCore;
+﻿using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
+using Todo.API.EFCore;
 using Todo.API.Repository;
-using Microsoft.Extensions.Configuration;
+using Todo.API.Service;
 
 namespace Todo.API
 {
-    public class Startup
+    public static class Startup
     {
         public static IConfiguration Configuration { get; set; }
 
@@ -18,17 +16,16 @@ namespace Todo.API
         {
             var builder = WebApplication.CreateBuilder(args);
 
-#pragma warning disable ASP0013 // Suggest switching from using Configure methods to WebApplicationBuilder.Configuration
+#pragma warning disable ASP0013
             builder.Host.ConfigureAppConfiguration(app =>
             {
                 app.AddJsonFile(configFileName);
                 if (builder.Environment.IsDevelopment())
                 {
                     app.AddEnvironmentVariables();
-                    app.AddUserSecrets<Startup>();
                 }
             });
-#pragma warning restore ASP0013 // Suggest switching from using Configure methods to WebApplicationBuilder.Configuration
+#pragma warning restore ASP0013 
 
             Configuration = builder.Configuration;
 
@@ -55,14 +52,12 @@ namespace Todo.API
             services.AddDbContext<AppDbContext>();
 
 
-            services.AddFluentValidationAutoValidation();
-            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-            services.AddAutoMapper(typeof(Startup));
+            services.AddFluentValidation();
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
-
             services.AddTransient<ITaskService, TaskService>();
             services.AddTransient<ITaskRepository, TaskRepository>();
         }
@@ -86,6 +81,13 @@ namespace Todo.API
             {
                 endpoints.MapControllers();
             });
+
+        }
+
+        private static void AddFluentValidation(this IServiceCollection services)
+        {
+            services.AddFluentValidationAutoValidation();
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         }
     }
 }

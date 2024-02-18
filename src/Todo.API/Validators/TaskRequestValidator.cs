@@ -16,4 +16,13 @@ namespace Todo.API.Validators
                 .MaximumLength(255);
         }
     }
+
+    public class TaskRequestCollectionValidator : AbstractValidator<IEnumerable<TaskRequest>>
+    {
+        public TaskRequestCollectionValidator()
+        {
+            RuleForEach(collection => collection)
+                .SetValidator(new TaskRequestValidator());
+        }
+    }
 }

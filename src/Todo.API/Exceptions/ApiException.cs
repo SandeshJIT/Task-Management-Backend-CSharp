@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using Microsoft.AspNetCore.Http;
+using System.Net;
 using System.Runtime.Serialization;
 
 namespace Todo.API.Exceptions
@@ -9,26 +10,13 @@ namespace Todo.API.Exceptions
         private HttpStatusCode statusCode;
         private string message;
 
-        public ApiException()
+        public ApiException(HttpStatusCode statusCode, string message) :
+        base($"Request to API failed with status code {statusCode}: {message}")
         {
+            statusCode = statusCode;
+            message = message;
         }
 
-        public ApiException(string? message) : base(message)
-        {
-        }
 
-        public ApiException(HttpStatusCode internalServerError, string message)
-        {
-            statusCode = internalServerError;
-            this.message = message;
-        }
-
-        public ApiException(string? message, Exception? innerException) : base(message, innerException)
-        {
-        }
-
-        protected ApiException(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
-        }
     }
 }
