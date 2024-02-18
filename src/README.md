@@ -37,15 +37,16 @@ Using .NET Core CLI:
    dotnet ef database update
     ```
 
-Project Structure
+**Project Structure**
 Todo.Api: This is the API project and serves as the startup project.
 Todo.UnitTests: Includes unit tests for the application.
-API Endpoints
-GET /api/todo-list/task: Get a list of all todo items.
-POST /api/todo-list/task: Create a new todo item.
-GET /api/todo-list/task/:id: Get details of a specific todo item.
 
-Contributing
+**API Endpoints**
+GET /todos: Get a list of all todo items.
+POST /todos: Create a new todo item.
+GET /todos/:id: Get details of a specific todo item.
+
+**Contributing**
 Contributions are welcome! Feel free to open issues or submit pull requests.
 
 License
