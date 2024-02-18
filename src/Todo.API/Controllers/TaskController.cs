@@ -2,13 +2,8 @@
 using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
-using System.Net;
-using Todo.API.AutoMapper;
-using Todo.API.Exceptions;
 using Todo.API.Model;
 using Todo.API.Service;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Todo.API.Controllers
 {
@@ -52,11 +47,11 @@ namespace Todo.API.Controllers
             var response = _autoMapper.Map<IEnumerable<TaskResponse>>(result);
             return Ok(response);
         }
-        
+
         /// <summary>
         /// Get All Tasks
         /// </summary>
-        /// <param name=""></param>
+                /// <param name=""></param>
         /// <returns>TaskResponse list is responsed</returns>
         [HttpGet]
         [ProducesResponseType(typeof(TaskResponse), StatusCodes.Status200OK)]
