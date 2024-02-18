@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FluentValidation;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using Todo.API.Model;
@@ -71,7 +72,7 @@ namespace Todo.API.Controllers
         /// <returns>TaskResponse is responsed</returns>
         [HttpGet("{Id}")]
         [ProducesResponseType(typeof(TaskResponse), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(List<ErrorResponse>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(NotFound), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetTaskById(Guid Id)
         {
             TaskEntity? result = await _taskService.GetTaskByIdAsync(Id);
