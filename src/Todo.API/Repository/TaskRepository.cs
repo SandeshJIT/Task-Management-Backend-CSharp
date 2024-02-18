@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using Todo.API.EFCore;
+using Todo.API.Exceptions;
 using Todo.API.Model;
 
 namespace Todo.API.Repository

@@ -10,6 +10,9 @@ namespace Todo.API.EFCore
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
+        public AppDbContext() : base()
+        {
+        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Configure your entity mappings here

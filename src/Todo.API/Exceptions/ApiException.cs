@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace Todo.API.Exceptions
 {
     [Serializable]
-    internal class ApiException : Exception
+    public class ApiException : Exception
     {
         private HttpStatusCode statusCode;
         private string message;
