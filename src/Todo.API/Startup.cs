@@ -48,9 +48,7 @@ namespace Todo.API
                 options.UseSqlServer(connString);
             });
 
-
             services.AddDbContext<AppDbContext>();
-
 
             services.AddFluentValidation();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -58,6 +56,11 @@ namespace Todo.API
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
+            RegisterServices(services);
+        }
+
+        private static void RegisterServices(IServiceCollection services)
+        {
             services.AddTransient<ITaskService, TaskService>();
             services.AddTransient<ITaskRepository, TaskRepository>();
         }

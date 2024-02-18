@@ -6,5 +6,6 @@ namespace Todo.API.Repository
     {
         Task<IEnumerable<TaskEntity>> CreateTaskAsync(IEnumerable<TaskEntity> tasklist);
         Task<IEnumerable<TaskEntity>> GetAllTasksAsync();
+        Task<TaskEntity?> GetTaskByIdAsync(Guid id);
     }
 }

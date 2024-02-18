@@ -2,6 +2,7 @@
 using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using Todo.API.Model;
 using Todo.API.Service;
 
@@ -51,7 +52,7 @@ namespace Todo.API.Controllers
         /// <summary>
         /// Get All Tasks
         /// </summary>
-                /// <param name=""></param>
+        /// <param name=""></param>
         /// <returns>TaskResponse list is responsed</returns>
         [HttpGet]
         [ProducesResponseType(typeof(TaskResponse), StatusCodes.Status200OK)]
@@ -60,6 +61,25 @@ namespace Todo.API.Controllers
         {
             IEnumerable<TaskEntity> result = await _taskService.GetAllTasksAsync();
             var response = _autoMapper.Map<IEnumerable<TaskResponse>>(result);
+            return Ok(response);
+        }
+
+        /// <summary>
+        /// Get Task based on ID
+        /// </summary>
+        /// <param name="taskId></param>
+        /// <returns>TaskResponse is responsed</returns>
+        [HttpGet("{Id}")]
+        [ProducesResponseType(typeof(TaskResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(List<ErrorResponse>), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetTaskById(Guid Id)
+        {
+            TaskEntity? result = await _taskService.GetTaskByIdAsync(Id);
+            if(result == null)
+            {
+                return BadRequest("Task with given Id is invalid");
+            }
+            var response = _autoMapper.Map<TaskResponse>(result);
             return Ok(response);
         }
     }

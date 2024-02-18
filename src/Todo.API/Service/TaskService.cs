@@ -25,5 +25,10 @@ namespace Todo.API.Service
         {
             return await _taskRepository.GetAllTasksAsync();
         }
+
+        public async Task<TaskEntity?> GetTaskByIdAsync(Guid id)
+        {
+            return await _taskRepository.GetTaskByIdAsync(id);
+        }
     }
 }
