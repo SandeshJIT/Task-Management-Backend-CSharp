@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Runtime.Serialization;
 
-namespace Todo.API.Repository
+namespace Todo.API.Exceptions
 {
     [Serializable]
     internal class ApiException : Exception
@@ -19,7 +19,7 @@ namespace Todo.API.Repository
 
         public ApiException(HttpStatusCode internalServerError, string message)
         {
-            this.statusCode = internalServerError;
+            statusCode = internalServerError;
             this.message = message;
         }
 
