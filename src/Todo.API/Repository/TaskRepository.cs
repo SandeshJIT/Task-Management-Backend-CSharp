@@ -1,4 +1,6 @@
-﻿using System.Net;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
+using System.Net;
 using Todo.API.EFCore;
 using Todo.API.Exceptions;
 using Todo.API.Model;
@@ -27,6 +29,19 @@ namespace Todo.API.Repository
                 throw new ApiException(HttpStatusCode.InternalServerError, ex.Message);
             }
 
+        }
+
+        public async Task<IEnumerable<TaskEntity>> GetAllTasksAsync()
+        {
+            try
+            {
+                var tasklist = await _dbContext.TaskEntities.ToListAsync();
+                return tasklist;
+            }
+            catch (Exception ex)
+            {
+                throw new ApiException(HttpStatusCode.InternalServerError, ex.Message);
+            }
         }
     }
 }

@@ -34,5 +34,20 @@ namespace Todo.API.Controllers
             var response = _autoMapper.Map<IEnumerable<TaskResponse>>(result);
             return Ok(response);
         }
+        
+        /// <summary>
+        /// Get All Tasks
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns>TaskResponse list is responsed</returns>
+        [HttpGet]
+        [ProducesResponseType(typeof(TaskResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(List<ValidationFailure>), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetAllTasks()
+        {
+            IEnumerable<TaskEntity> result = await _taskService.GetAllTasksAsync();
+            var response = _autoMapper.Map<IEnumerable<TaskResponse>>(result);
+            return Ok(response);
+        }
     }
 }

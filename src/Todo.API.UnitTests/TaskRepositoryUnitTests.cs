@@ -1,11 +1,9 @@
 ﻿using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
-using Moq;
 using Todo.API.EFCore;
+using Todo.API.Exceptions;
 using Todo.API.Model;
 using Todo.API.Repository;
-using Todo.API.Exceptions;
-using Xunit.Sdk;
 
 namespace Todo.API.UnitTests
 {
@@ -61,8 +59,31 @@ namespace Todo.API.UnitTests
                 Func<Task> action = async () => await repository.CreateTaskAsync(taskList);
 
                 // Assert
-                await action.Should().ThrowAsync<ApiException>(); 
+                await action.Should().ThrowAsync<ApiException>();
             }
+        }
+
+        [Fact]
+        public async Task GetAllTasksAsync_Should_Return_All_Tasks()
+        {
+            // Arrange
+            var taskEntities = new List<TaskEntity>
+            {
+                new TaskEntity {TaskName = "Task 1" , TaskDescription = "Test 1" },
+                new TaskEntity {TaskName = "Task 2" , TaskDescription = "Test 2"}
+            };
+
+            await _context.TaskEntities.AddRangeAsync(taskEntities);
+            await _context.SaveChangesAsync();
+
+            // Act
+            var result = await _taskRepository.GetAllTasksAsync();
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().HaveCount(2);
+            result.Select(t => t.TaskName).Should().Contain(new[] { "Task 1", "Task 2" });
+            result.Select(t => t.TaskDescription).Should().Contain(new[] { "Test 1", "Test 2" });
         }
     }
 }
