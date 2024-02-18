@@ -4,6 +4,6 @@ namespace Todo.API.Service
 {
     public interface ITaskService
     {
-        Task<IEnumerable<TaskEntity>> CreateTasksAsync(IEnumerable<TaskRequest> tasklist);
+        Task<IEnumerable<TaskEntity>> CreateTasksAsync(IEnumerable<TaskEntity> tasklist);
     }
 }

@@ -30,7 +30,7 @@ namespace Todo.API.Controllers
         public async Task<IActionResult> CreateAsync([FromBody] IEnumerable<TaskRequest> tasklist)
         {
             var taskModelList = _autoMapper.Map<IEnumerable<TaskEntity>>(tasklist);
-            IEnumerable<TaskEntity> result = await _taskService.CreateTasksAsync(tasklist);
+            IEnumerable<TaskEntity> result = await _taskService.CreateTasksAsync(taskModelList);
             var response = _autoMapper.Map<IEnumerable<TaskResponse>>(result);
             return Ok(response);
         }

@@ -12,8 +12,12 @@ namespace Todo.API.Service
             _taskRepository = taskRepository;
         }
 
-        public async Task<IEnumerable<TaskEntity>> CreateTasksAsync(IEnumerable<TaskRequest> tasklist)
+        public async Task<IEnumerable<TaskEntity>> CreateTasksAsync(IEnumerable<TaskEntity> tasklist)
         {
+            foreach (var item in tasklist)
+            {
+                item.DateTime = DateTime.Now;
+            }
             return await _taskRepository.CreateTaskAsync(tasklist);
         }
     }
