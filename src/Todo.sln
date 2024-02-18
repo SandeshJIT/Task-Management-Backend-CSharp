@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Todo.API", "Todo.API\Todo.API.csproj", "{5CFC0210-F406-4E76-94F5-CE370F6ED2FD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Todo.API.UnitTests", "Todo.API.UnitTests\Todo.API.UnitTests.csproj", "{25EEA43A-190E-473B-8664-A72CB816C80D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5CFC0210-F406-4E76-94F5-CE370F6ED2FD} = {5CFC0210-F406-4E76-94F5-CE370F6ED2FD}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{CB003FDA-2BFE-4AD4-A3D5-45C686CAB68F}"
 EndProject
