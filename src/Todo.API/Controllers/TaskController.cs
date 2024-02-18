@@ -77,7 +77,7 @@ namespace Todo.API.Controllers
             TaskEntity? result = await _taskService.GetTaskByIdAsync(Id);
             if(result == null)
             {
-                return BadRequest("Task with given Id is invalid");
+                return NotFound("Task with ID not found");
             }
             var response = _autoMapper.Map<TaskResponse>(result);
             return Ok(response);
