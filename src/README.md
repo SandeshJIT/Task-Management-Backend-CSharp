@@ -1,13 +1,13 @@
-# Todo-Backend
+# Task-Management-Backend-CSharp
 
-Welcome to the Todo-Backend project! This repository serves as an example of a simple backend application for managing todo items. It is built using .NET and EF Core.
+Welcome to the Task-Management-Backend-CSharp project! This repository serves as an example of a simple backend application for managing todo items. It is built using .NET and EF Core.
 
 ## Getting Started
 
 1. Clone this repository to your local machine:
 
    ```bash
-   git clone [https://github.com/SandeshJIT/Todo-Backend.git](https://github.com/SandeshJIT/Task-Management-Backend-CSharp.git)
+   git clone https://github.com/SandeshJIT/Task-Management-Backend-CSharp.git
 
 2.Navigate to the src directory:
       ```bash
