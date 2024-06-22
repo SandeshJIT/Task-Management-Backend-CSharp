@@ -8,7 +8,7 @@ using Todo.API.Repository;
 namespace Todo.API.UnitTests
 {
     [Collection("DatabaseCollection")]
-    public class TaskRepositoryUnitTests
+    public class TaskRepositoryUnitTests : IDisposable
     {
         private readonly DbFixture _fixture;
         private readonly AppDbContext _context;
@@ -18,6 +18,7 @@ namespace Todo.API.UnitTests
             _fixture = fixture;
             _context = _fixture.DbContext;
             _taskRepository = new TaskRepository(_context);
+
         }
         [Fact]
         public async Task CreateTaskAsync_GivenTaskEntity_ShouldSaveDataInDb()
@@ -67,6 +68,7 @@ namespace Todo.API.UnitTests
         public async Task GetAllTasksAsync_Should_Return_All_Tasks()
         {
             // Arrange
+
             var taskEntities = new List<TaskEntity>
             {
                 new TaskEntity {TaskName = "Task 1" , TaskDescription = "Test 1" },
@@ -84,6 +86,63 @@ namespace Todo.API.UnitTests
             result.Should().HaveCount(2);
             result.Select(t => t.TaskName).Should().Contain(new[] { "Task 1", "Task 2" });
             result.Select(t => t.TaskDescription).Should().Contain(new[] { "Test 1", "Test 2" });
+        }
+
+        [Fact]
+        public async Task GetTaskByIdAsync_GivenValidId_ShouldReturnEntityAsync()
+        {
+            //Arrange
+            var taskEntities = new List<TaskEntity>
+            {
+                new TaskEntity {Id = Guid.NewGuid(), TaskName = "Task 1" , TaskDescription = "Test 1" },
+                new TaskEntity {Id = Guid.NewGuid(),TaskName = "Task 2" , TaskDescription = "Test 2"}
+            };
+
+            await _context.TaskEntities.AddRangeAsync(taskEntities);
+            await _context.SaveChangesAsync();
+
+            //Act
+            var result = await _taskRepository.GetTaskByIdAsync(taskEntities[0].Id);
+            result.Should().NotBeNull();
+            result.Should().BeEquivalentTo(taskEntities[0]);
+        }
+
+        [Fact]
+        public async Task GetTaskByIdAsync_GivenInValidId_ShouldReturnNull()
+        {
+            //Act
+            var result = await _taskRepository.GetTaskByIdAsync(Guid.NewGuid());
+
+            //Assert
+            result.Should().BeNull();
+        }
+
+        [Fact]
+        public async Task DeleteTaskById_GievnValidId_ShouldDeleteTheEntityAsync()
+        {
+            //Arrange
+            var taskEntities = new List<TaskEntity>
+            {
+                new TaskEntity {Id = Guid.NewGuid(), TaskName = "Task 1" , TaskDescription = "Test 1" },
+                new TaskEntity {Id = Guid.NewGuid(),TaskName = "Task 2" , TaskDescription = "Test 2"}
+            };
+
+            await _context.TaskEntities.AddRangeAsync(taskEntities);
+            await _context.SaveChangesAsync();
+
+            //Act
+            var result = await _taskRepository.DeleteTaskById(taskEntities[0].Id);
+            result.Should().NotBeNull();
+            result.Should().BeEquivalentTo(taskEntities[0]);
+            _context.TaskEntities.Count().Should().Be(1);
+            _context.TaskEntities.Should().NotContain(taskEntities[0]);
+
+
+        }
+
+        public void Dispose()
+        {
+            _context.Database.EnsureDeletedAsync().Wait();
         }
     }
 }

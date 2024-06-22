@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using FluentValidation;
-using FluentValidation.Results;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
 using Todo.API.Model;
 using Todo.API.Service;
 
@@ -57,7 +55,6 @@ namespace Todo.API.Controllers
         /// <returns>TaskResponse list is responsed</returns>
         [HttpGet]
         [ProducesResponseType(typeof(TaskResponse), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(List<ValidationFailure>), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAllTasks()
         {
             IEnumerable<TaskEntity> result = await _taskService.GetAllTasksAsync();
@@ -76,12 +73,31 @@ namespace Todo.API.Controllers
         public async Task<IActionResult> GetTaskById(Guid Id)
         {
             TaskEntity? result = await _taskService.GetTaskByIdAsync(Id);
-            if(result == null)
+            if (result == null)
             {
                 return NotFound("Task with ID not found");
             }
             var response = _autoMapper.Map<TaskResponse>(result);
             return Ok(response);
+        }
+
+        /// <summary>
+        /// Delete Task based on ID
+        /// </summary>
+        /// <param name="taskId></param>
+        /// <returns>TaskResponse is responsed</returns>
+        [HttpDelete("{Id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(NotFound), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> DeleteTaskbyId(Guid Id)
+        {
+            TaskEntity? result = await _taskService.DeleteTaskById(Id);
+            if (result == null)
+            {
+                return NotFound("Task with ID not found");
+            }
+            var response = _autoMapper.Map<TaskResponse>(result);
+            return NoContent();
         }
     }
 }

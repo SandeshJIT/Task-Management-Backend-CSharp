@@ -30,6 +30,22 @@ namespace Todo.API.Repository
 
         }
 
+        public async Task<TaskEntity?> DeleteTaskById(Guid id)
+        {
+            try
+            {
+                var task = await _dbContext.TaskEntities.FindAsync(id);
+                if(task is null)    return null;
+                var result = _dbContext.TaskEntities.Remove(task);
+                await _dbContext.SaveChangesAsync();
+                return task;
+            }
+            catch (Exception ex)
+            {
+                throw new ApiException(HttpStatusCode.InternalServerError, ex.Message);
+            }
+        }
+
         public async Task<IEnumerable<TaskEntity>> GetAllTasksAsync()
         {
             try

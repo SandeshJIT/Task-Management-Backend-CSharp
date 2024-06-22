@@ -21,6 +21,11 @@ namespace Todo.API.Service
             return await _taskRepository.CreateTaskAsync(tasklist);
         }
 
+        public async Task<TaskEntity?> DeleteTaskById(Guid id)
+        {
+            return await _taskRepository.DeleteTaskById(id);
+        }
+
         public async Task<IEnumerable<TaskEntity>> GetAllTasksAsync()
         {
             return await _taskRepository.GetAllTasksAsync();
