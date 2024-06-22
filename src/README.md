@@ -1,6 +1,17 @@
-# Task-Management-Backend-CSharp
+# Task Management Backend CSharp
 
-Welcome to the Task-Management-Backend-CSharp project! This repository serves as an example of a simple backend application for managing todo items. It is built using .NET and EF Core.
+## Overview
+
+**Task Management Backend CSharp** is a C# project designed to handle CRUD (Create, Read, Update, Delete) operations for managing a task list. The project utilizes Entity Framework Core for database operations, Fluent Validations for input validation, and Swagger for API documentation. Comprehensive unit tests are included to ensure the robustness of the application.
+
+## Features
+
+- **CRUD Operations**: Manage tasks with full CRUD functionality.
+- **Entity Framework Core**: Integration with EF Core for database interactions.
+- **Fluent Validations**: Input validations using FluentValidation.
+- **Swagger Documentation**: Auto-generated API documentation using Swagger.
+- **Unit Testing**: Comprehensive unit tests to ensure code quality and reliability.
+
 
 ## Getting Started
 
@@ -36,20 +47,21 @@ Using .NET Core CLI:
     ```bash
    dotnet ef database update
     ```
+## Usage
 
 ## Project Structure
 Todo.Api: This is the API project and serves as the startup project.
 Todo.UnitTests: Includes unit tests for the application.
 
-## API Endpoints
-GET /todos: Get a list of all todo items.
-POST /todos: Create a new todo item.
-GET /todos/:id: Get details of a specific todo item.
-DELETE /todos/:id: Delete a specific todo item.
+### Endpoints
+
+- **GET** `/todos`: Get a list of all todo items.
+- **POST** `/todos`: Create a new todo item.
+- **GET** `/todos/:id`: Get details of a specific todo item.
+- **DELETE** `/todos/:id`: Delete a specific todo item.
 
 ## Contributing
 Contributions are welcome! Feel free to open issues or submit pull requests.
 
-License
-This project is licensed under the MIT License. See the LICENSE file for details.
+
 
