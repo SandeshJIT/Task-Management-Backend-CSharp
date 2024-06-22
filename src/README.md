@@ -7,11 +7,11 @@ Welcome to the Todo-Backend project! This repository serves as an example of a s
 1. Clone this repository to your local machine:
 
    ```bash
-   git clone https://github.com/SandeshJIT/Todo-Backend.git
+   git clone [https://github.com/SandeshJIT/Todo-Backend.git](https://github.com/SandeshJIT/Task-Management-Backend-CSharp.git)
 
 2.Navigate to the src directory:
       ```bash
-      cd Todo-Backend/src
+      cd Task-Management-Backend-CSharp/src
       ```
 
 3.Install the required dependencies (assuming you have .NET SDK installed):
@@ -45,6 +45,7 @@ Todo.UnitTests: Includes unit tests for the application.
 GET /todos: Get a list of all todo items.
 POST /todos: Create a new todo item.
 GET /todos/:id: Get details of a specific todo item.
+DELETE /todos/:id: Delete a specific todo item.
 
 ## Contributing
 Contributions are welcome! Feel free to open issues or submit pull requests.
