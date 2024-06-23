@@ -35,5 +35,10 @@ namespace Todo.API.Service
         {
             return await _taskRepository.GetTaskByIdAsync(id);
         }
+
+        public async Task<TaskEntity?> ToggleStatusById(Guid id)
+        {
+            return await _taskRepository.ToggleStatusById(id);
+        }
     }
 }

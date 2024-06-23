@@ -71,5 +71,23 @@ namespace Todo.API.Repository
                 throw new ApiException(HttpStatusCode.InternalServerError, ex.Message);
             }
         }
+
+        public async Task<TaskEntity?> ToggleStatusById(Guid id)
+        {
+            try
+            {
+                var task = await _dbContext.TaskEntities.FindAsync(id);
+                if (task == null)
+                    return null;
+                _dbContext.TaskEntities.Update(task);
+                task.Status = !task.Status;
+                await _dbContext.SaveChangesAsync();
+                return task;
+            }
+            catch(Exception ex)
+            {
+                throw new ApiException(HttpStatusCode.InternalServerError, ex.Message);
+            }
+        }
     }
 }

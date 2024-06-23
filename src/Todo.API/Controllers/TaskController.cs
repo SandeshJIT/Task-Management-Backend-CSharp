@@ -96,8 +96,26 @@ namespace Todo.API.Controllers
             {
                 return NotFound("Task with ID not found");
             }
-            var response = _autoMapper.Map<TaskResponse>(result);
             return NoContent();
+        }
+
+        /// <summary>
+        /// Toggle status based on ID
+        /// </summary>
+        /// <param name="taskId></param>
+        /// <returns>TaskResponse is responsed</returns>
+        [HttpPatch("{Id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(NotFound), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> ToggleStatusById(Guid Id)
+        {
+            TaskEntity? result = await _taskService.ToggleStatusById(Id);
+            if (result == null)
+            {
+                return NotFound("Task with ID not found");
+            }
+            var response = _autoMapper.Map<TaskResponse>(result);
+            return Ok(response);
         }
     }
 }

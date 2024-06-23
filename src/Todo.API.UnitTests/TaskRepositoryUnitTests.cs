@@ -103,6 +103,8 @@ namespace Todo.API.UnitTests
 
             //Act
             var result = await _taskRepository.GetTaskByIdAsync(taskEntities[0].Id);
+
+            //Assert
             result.Should().NotBeNull();
             result.Should().BeEquivalentTo(taskEntities[0]);
         }
@@ -132,11 +134,47 @@ namespace Todo.API.UnitTests
 
             //Act
             var result = await _taskRepository.DeleteTaskById(taskEntities[0].Id);
+
+            //Assert
             result.Should().NotBeNull();
             result.Should().BeEquivalentTo(taskEntities[0]);
             _context.TaskEntities.Count().Should().Be(1);
             _context.TaskEntities.Should().NotContain(taskEntities[0]);
 
+
+        }
+
+        [Fact]
+        public async Task ToggleStatusById_GievnValidId_ShouldToggleStatusAsync()
+        {
+            //Arrange
+            var taskEntities = new List<TaskEntity>
+            {
+                new TaskEntity {Id = Guid.NewGuid(), TaskName = "Task 1" , TaskDescription = "Test 1" },
+                new TaskEntity {Id = Guid.NewGuid(),TaskName = "Task 2" , TaskDescription = "Test 2"}
+            };
+
+            await _context.TaskEntities.AddRangeAsync(taskEntities);
+            await _context.SaveChangesAsync();
+
+            //Act
+            var result = await _taskRepository.ToggleStatusById(taskEntities[0].Id);
+
+            //Assert
+            result.Should().NotBeNull();
+            result!.Status.Should().BeTrue();
+            _context.TaskEntities.FirstOrDefault(x => x.Id == taskEntities[0].Id)!.Status.Should().BeTrue();
+
+        }
+
+        [Fact]
+        public async Task ToggleStatusById_GievnInValidId_ShouldReturnNull()
+        {
+            //Act
+            var result = await _taskRepository.ToggleStatusById(Guid.NewGuid());
+
+            //Assert
+            result.Should().BeNull();
 
         }
 
