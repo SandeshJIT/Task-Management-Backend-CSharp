@@ -30,6 +30,7 @@ namespace Todo.API.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(TaskResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(List<ErrorResponse>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(List<ErrorResponse>), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> CreateAsync([FromBody] IEnumerable<TaskRequest> tasklist)
         {
             var validator = _validator.Validate(tasklist);
@@ -55,6 +56,8 @@ namespace Todo.API.Controllers
         /// <returns>TaskResponse list is responsed</returns>
         [HttpGet]
         [ProducesResponseType(typeof(TaskResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(List<ErrorResponse>), StatusCodes.Status500InternalServerError)]
+
         public async Task<IActionResult> GetAllTasks()
         {
             IEnumerable<TaskEntity> result = await _taskService.GetAllTasksAsync();
@@ -70,6 +73,8 @@ namespace Todo.API.Controllers
         [HttpGet("{Id}")]
         [ProducesResponseType(typeof(TaskResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(NotFound), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(List<ErrorResponse>), StatusCodes.Status500InternalServerError)]
+
         public async Task<IActionResult> GetTaskById(Guid Id)
         {
             TaskEntity? result = await _taskService.GetTaskByIdAsync(Id);
@@ -89,6 +94,8 @@ namespace Todo.API.Controllers
         [HttpDelete("{Id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(NotFound), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(List<ErrorResponse>), StatusCodes.Status500InternalServerError)]
+
         public async Task<IActionResult> DeleteTaskbyId(Guid Id)
         {
             TaskEntity? result = await _taskService.DeleteTaskById(Id);
@@ -107,6 +114,8 @@ namespace Todo.API.Controllers
         [HttpPatch("{Id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(NotFound), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(List<ErrorResponse>), StatusCodes.Status500InternalServerError)]
+
         public async Task<IActionResult> ToggleStatusById(Guid Id)
         {
             TaskEntity? result = await _taskService.ToggleStatusById(Id);
