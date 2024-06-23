@@ -15,7 +15,6 @@ namespace Todo.API.EFCore
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Configure your entity mappings here
         }
     }
 }

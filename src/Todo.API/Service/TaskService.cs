@@ -17,6 +17,7 @@ namespace Todo.API.Service
             foreach (var item in tasklist)
             {
                 item.DateTime = DateTime.Now;
+                item.DueDate = DateTime.Now.AddDays(3);
             }
             return await _taskRepository.CreateTaskAsync(tasklist);
         }
